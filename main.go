@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"log"
 	"net/http"
 )
 
@@ -38,11 +40,21 @@ func main() {
 	// fmt.Println("back into a Go data structure", xp2)
 
 	http.HandleFunc("/encode", foo)
-	http.HandleFunc("/encode", bar)
+	http.HandleFunc("/decode", bar)
 	http.ListenAndServe(":8080", nil)
 
 }
 func foo(w http.ResponseWriter, r *http.Request) {
+
+	p1 := person{
+		First: "Jenny",
+	}
+
+	err := json.NewEncoder(w).Encode(p1)
+
+	if err != nil {
+		log.Println("Encoded bad data")
+	}
 
 }
 
